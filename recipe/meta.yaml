@@ -1,34 +1,36 @@
 {% set name = "scikit-plot" %}
 {% set version = "0.3.7" %}
-{% set sha256 = "2c7948817fd2dc06879cfe3c1fdde56a8e71fa5ac626ffbe79f043650baa6242" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 2c7948817fd2dc06879cfe3c1fdde56a8e71fa5ac626ffbe79f043650baa6242
 
 build:
-  noarch: python
-  number: 1
-  script: python -m pip install .
+  number: 0
+  script: python -m pip install . --no-deps --no-build-isolation -vvv
 
 requirements:
   host:
     - pip
     - python
     - setuptools
+    - wheel
   run:
     - python
-    - matplotlib-base
-    - scikit-learn
-    - scipy
-    - joblib
+    - matplotlib-base  >=1.4.0
+    - scikit-learn  >=0.18
+    - scipy  >=0.9
+    - joblib  >=0.10
 
 test:
+  requires:
+    - pip
+  commands:
+    - pip check
   imports:
     - scikitplot
     - scikitplot.plotters
@@ -46,7 +48,13 @@ about:
   license_family: MIT
   license_file: LICENSE
   summary: 'An intuitive library to add plotting functionality to scikit-learn objects.'
-  doc_url: scikit-plot.readthedocs.io/
+  description: |
+    Scikit-plot is a Python library that provides easy-to-use functions for visualizing 
+    machine learning models and evaluation metrics. It is built on top of popular data
+    visualization library Matplotlib and works seamlessly with scikit-learn, a widely 
+    used machine learning library in Python.
+  doc_url: https://scikit-plot.readthedocs.io/en/stable/
+  dev_url: https://github.com/reiinakano/scikit-plot
 
 extra:
   recipe-maintainers:
